@@ -12,6 +12,7 @@ public class Deck {
 			}
 		}
 	}
+	
 	public Card draw() {
 		counter++;
 		return deck[counter];	

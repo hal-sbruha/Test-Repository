@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Game {
@@ -11,7 +12,8 @@ public class Game {
 		Deck d = new Deck();
 		d.shuffle();
 		setupStacks(d, stacks);
-		setupHand(d,hand);
+		LinkedList<Card> ll = setupDeck(d, 28);
+		setupHand(ll,hand);
 		printOptions();
 		Scanner sc = new Scanner(System.in);
 		while (true) {
@@ -68,10 +70,10 @@ public class Game {
 		}
 		return currentMax;
 	}
-	public static void setupHand(Deck deck, Card hand[]) {
-		hand[0] = deck.draw();
-		hand[1] = deck.draw();
-		hand[2] = deck.draw();
+	public static void setupHand(LinkedList<Card> ll, Card hand[]) {
+		hand[0] = ll.pollFirst();
+		hand[1] = ll.pollFirst();
+		hand[2] = ll.pollFirst();
 	}
 	public static void move(Deck deck, ArrayList<ArrayList<Card>> stacks, int startStack, int endStack, int numCards) {
 		if (stacks.get(endStack).size() != 0 && !valid(stacks.get(endStack).get(stacks.get(endStack).size() -1),stacks.get(startStack).get(stacks.get(startStack).size() - numCards))){
@@ -192,6 +194,14 @@ public class Game {
 		}
 		System.out.println("Not valid move.");
 		return false;
+	}
+	
+	public static LinkedList<Card> setupDeck(Deck d, int num) {
+		LinkedList<Card> ll = new LinkedList<Card>();
+		for (int i = num; i < 52; i++) {
+			ll.add(d.deck[i]);
+		}
+		return ll;
 	}
 
 }
